@@ -184,7 +184,7 @@ The value '25' represents the frequency of term
 To see a visualization of topic breakdown (top k words per topic) as a plot, set the value under `etc/run_model.ini` configuration section `[model]` configuration key `show_viz` to `True`.
 ```
 # configure which model to use
-# valid methods: (em|lda)
+# valid methods: (em|lda|lsa)
 [model]
   ...
   show_viz = True
