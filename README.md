@@ -92,8 +92,8 @@ jupyter
 ## Instructions
 1) Clone and Setup `venv` using python (>= 3.9)
 ```
-$ git clone git@github.com:ucgw/cs410-project.git
-$ cd cs410-project
+$ git clone git@github.com:ucgw/cs410project-Predictive-Maintenance
+$ cd cs410project-Predictive-Maintenance
 $ python3 -m venv <desired venv directory path>
 $ source <path to venv directory>/bin/activate
 (venv) $ pip install -r requirements.txt
