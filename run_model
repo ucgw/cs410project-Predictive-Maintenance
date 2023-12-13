@@ -1,0 +1,126 @@
+#!/usr/bin/env python3
+"""
+Usage:
+  run_model [--help] (--rand-query=<term_count>|--query=<query_string>)
+
+Runs a model against the Dataset of Maintenance Event Schedules using one of the supported methods as defined in a configuration file:
+  em:    generic EM (Expectation Maximization)
+  lda:   LDA (Linear Discriminet Analysis)
+  plsa:  PLSA (Probabilistic Latent Semantic Analysis)
+
+The purpose of the modeling is to offer as relevant Suggestions for the Best Hour of the day to Schedule an event based on query term strings evaluated.
+
+Configuration File / Spec
+=========================
+# CFG_FILE Default: './etc/run_model.ini'
+#
+# To override to different ini config file path:
+
+$ export _CFG_FILE=/path/to/run_model.ini
+
+
+# CFG_SPEC Default: './share/run_model.spec'
+#
+# To override to different spec file path:
+
+$ export _CFG_SPEC=/path/to/run_model.spec
+
+
+Options:
+  --rand-query=<term_count>    Number of random terms from corpus to generate a random query term string for generating hour suggestions
+  --query=<query_string>       User defined term query string for generating hour suggestions
+  --help        Print this help screen and exit.
+
+NOTE: '--rand-query' and '--query' are mutually exclusive.
+"""
+import sys
+import os
+import subprocess
+from docopt import docopt
+
+sys.path.insert(0, './src/lib')
+sys.path.insert(0, './lib')
+os.environ['PYTHONPATH'] = './src/lib'
+import ModelConfig as mconf
+
+CFG_SPEC = os.environ.get('_CFG_SPEC', './share/run_model.spec')
+CFG_FILE = os.environ.get('_CFG_FILE', './etc/run_model.ini')
+TQ_CMD = os.environ.get('_TQ_CMD', './src/gen_em_model.py')
+RANDQ_CMD = os.environ.get('_RANDQ_CMD', './src/bin/gen_rand_topic_query.sh')
+
+def get_args_query_param(randq, q):
+    (randquery, query) = (None, None)
+    if randq is not None:
+        try:
+            if len(randq) == 0:
+                raise ValueError
+            randquery = randq
+        except ValueError:
+            sys.stderr.write("Error: '--rand-query' needs to be an integer! see usage help for details\n")
+            sys.exit(1)
+    elif q is not None:
+        if len(q) > 0:
+            query = q
+        else:
+            sys.stderr.write("Error: '--query' is empty! see usage help for details\n")
+            sys.exit(1)
+    return(randquery, query)
+
+if __name__ == '__main__':
+    args = docopt(__doc__)
+
+    (randquery, query) = get_args_query_param(
+                           args['--rand-query'],
+                           args['--query']
+                         )
+    config = mconf.build_config(CFG_FILE, CFG_SPEC)
+
+    debug = config['model']['debug']
+    showviz = config['model']['show_viz']
+    method = config['model']['method']
+    datasource = config['model']['datasource']
+
+    tqcmd = ["{tq}".format(tq=TQ_CMD)]
+    termquery = ""
+
+    vizcount = config['em_conf']['viz_count']
+    topcount = config['em_conf']['topic_count']
+    savemodel = config['em_conf']['save_model']
+    iterations = config['em_conf']['iterations']
+
+    if debug:
+        tqcmd.append('--debug')
+
+    if savemodel:
+        tqcmd.append('--save-model')
+
+    if showviz:
+        tqcmd.append('--show-viz')
+
+    tqcmd.extend(
+      ['--viz-words',
+       str(vizcount),
+       '--topics',
+       str(topcount),
+       '--iterations',
+       str(iterations),
+       datasource
+      ]
+    )
+
+    if randquery:
+        randtqcmd = ["{rtq}".format(rtq=RANDQ_CMD)]
+        randtqcmd.append(datasource)
+        randtqcmd.append(randquery)
+
+        query = subprocess.run(
+                  randtqcmd,
+                  capture_output=True
+                )
+        termquery = query.stdout.decode().strip()
+    else:
+        termquery = query
+
+    tqcmd.append(termquery)
+    tqcmd.append(method)
+    subprocess.run(tqcmd, env=os.environ)

@@ -1,0 +1,46 @@
+#!/usr/bin/env python3
+"""
+Usage:
+  print_corpus
+
+Prints all terms in the corpus for the dataset
+
+Configuration File / Spec
+=========================
+# CFG_FILE Default: './etc/run_model.ini'
+#
+# To override to different ini config file path:
+
+$ export _CFG_FILE=/path/to/run_model.ini
+
+
+# CFG_SPEC Default: './share/run_model.spec'
+#
+# To override to different spec file path:
+
+$ export _CFG_SPEC=/path/to/run_model.spec
+
+"""
+import sys
+import os
+import subprocess
+from docopt import docopt
+
+sys.path.insert(0, './src/lib')
+sys.path.insert(0, './lib')
+os.environ['PYTHONPATH'] = './src/lib'
+import ModelConfig as mconf
+
+CFG_SPEC = os.environ.get('_CFG_SPEC', './share/run_model.spec')
+CFG_FILE = os.environ.get('_CFG_FILE', './etc/run_model.ini')
+PRINT_CORPUS_CMD = os.environ.get('_PRINT_CORPUS_CMD', './src/bin/print_all_corpus_terms.sh')
+
+if __name__ == '__main__':
+    args = docopt(__doc__)
+
+    config = mconf.build_config(CFG_FILE, CFG_SPEC)
+
+    datasource = config['model']['datasource']
+
+    cmd = ["{tc}".format(tc=PRINT_CORPUS_CMD), datasource]
+    subprocess.run(cmd)

@@ -1,0 +1,2 @@
+#!/bin/sh
+./src/bin/sched_convert_dataset_emtopicmodel.sh
