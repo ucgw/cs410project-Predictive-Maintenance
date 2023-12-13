@@ -194,4 +194,4 @@ To see a visualization of topic breakdown (top k words per topic) as a plot, set
 Execute [run_model](#running-model-queries)
 
 ## Example Visualization:
-![Topic Visualization](https://github.com/ucgw/cs410-project/blob/main/images/Figure_1.png?raw=true)
+![Topic Visualization](https://github.com/ucgw/cs410project-Predictive-Maintenance/blob/main/images/Figure_1.png?raw=true)
