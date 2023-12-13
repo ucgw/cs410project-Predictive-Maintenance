@@ -92,7 +92,7 @@ attrs
 ## Instructions
 1) Clone and Setup `venv` using python (>= 3.9)
 ```
-$ git clone git@github.com:ucgw/cs410project-Predictive-Maintenance
+$ git clone https://github.com/ucgw/cs410project-Predictive-Maintenance.git
 $ cd cs410project-Predictive-Maintenance
 $ python3 -m venv <desired venv directory path>
 $ source <path to venv directory>/bin/activate
