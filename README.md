@@ -120,20 +120,50 @@ $ ./gen_datasource
 
 #### `--rand-query` Usage
 ```
-# Randomly choose 5 terms from corpus for suggestions
+# Randomly choose 5 terms from corpus for suggestions using EM
 
 $ ./run_model --rand-query=5
-Query Tokens Processed: ['0287388', 'system8', '0145867', 'lustre', 'pbs']
-Suggestions: [(('lustre', -3.844621964751844), (9, 85)), (('0287388', -1.7126241672093876), (11, 1))]
+Query Tokens Processed: ['warn', '0143798', 'work', 'system14', 'system1']
+Topic Model Method: EM
+Suggestions:
+Decision 1. Term: 'system1'. Hour: 9. Frequency: 53 
+Decision 2. Term: '0143798'. Hour: 21. Frequency: 12 
+Top words Topic[2]: ['system3', 'release', 'test', 'users']
+
+
+# Randomly choose 7 terms from the corpus for suggestions using LDA
+
+./run_model --rand-query=7
+Query Tokens Processed: ['0152789', '0244125', 'vendor', 'mainten', 'system74', 'probable', 'images']
+Topic Model Method: LDA
+Suggestions:
+Decision 1. Term: '0152789'. Hour: 21. Frequency: 10 
+Decision 2. Term: 'images'. Hour: 14. Frequency: 8 
+Top words Topic[0]: ['service27', 'environment', 'client', 'switch']
 ```
 
 #### `--query` Usage
 ```
-# User choosen terms from corpus for suggestions
+# User choosen terms from corpus for suggestions using EM
 
 ./run_model --query="User1 reboot server after patch"
 Query Tokens Processed: ['user1', 'reboot', 'server', 'after', 'patch']
-Suggestions: [(('reboot', -5.518598398323515), (17, 25)), (('user1', -1.7126241672093876), (11, 1))]
+Topic Model Method: EM
+Suggestions:
+Decision 1. Term: 'reboot'. Hour: 17. Frequency: 25 
+Decision 2. Term: 'user1'. Hour: 12. Frequency: 1 
+Top words Topic[2]: ['system3', 'release', 'test', 'users']
+
+
+# User choosen terms from corpus for suggestions using LDA
+
+./run_model --query="User1 reboot server after patch"
+Query Tokens Processed: ['user1', 'reboot', 'server', 'after', 'patch']
+Topic Model Method: LDA
+Suggestions:
+Decision 1. Term: 'server'. Hour: 11. Frequency: 11
+Decision 2. Term: 'patch'. Hour: 10. Frequency: 24
+Top words Topic[2]: ['switch', 'client', '0200489', 'exclusion']
 ```
 
 ### Interpreting `Suggestions` Output
