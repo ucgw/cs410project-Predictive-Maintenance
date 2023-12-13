@@ -2,7 +2,7 @@
 
 
 ## Overview
-This project attempts to offer suggested starting hours for proposed event summaries of maintenance tasks via term query strings using EM and LDA topic modeling. The raw dataset is somewhat contrived, however, loosely based off of actual scheduled maintenance days for a set of managed systems and services. The raw data has been cleaned for this project's use.
+This project attempts to offer suggested starting hours for proposed event summaries of maintenance tasks via term query strings using EM, LDA and LSA topic modeling. The raw dataset is somewhat contrived, however, loosely based off of actual scheduled maintenance days for a set of managed systems and services. The raw data has been cleaned for this project's use.
 <br>
 <br>
 The utility for having self-serviced scheduling based on historical scheduled events can be derived by offering 2 suggested start hours to the user's query (that if we had more time, could provide feedback into the system for generating new topic models). A configuration file is included (`etc/run_model.ini`); used to change output behavior as well as support using different topic modeling algorithms and providing a generic visualization of topic densities and top terms in each topic.
