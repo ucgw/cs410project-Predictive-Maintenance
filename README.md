@@ -82,11 +82,11 @@ This command can be used to get a list of all the terms in the corpus printed to
 Any combination of these terms can be used to craft a term query summary string passed into the `--query` parameter of `run_model`
 ```
 $ ./print_corpus | head -5
-scheduling
-gpfs
-license
-system3
-jupyter
+exists
+elastic
+ntp
+states
+attrs
 ```
 
 ## Instructions
