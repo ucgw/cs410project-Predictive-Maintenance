@@ -1,5 +1,12 @@
 ## CS410 Project: Predictive Maintenance Hour Schedules by Summary
 
+## Team
+__Captain__: Gabe West (NetID: gawest2)
+
+Team Member 1: Anastasia Serebryakova (NetID: as124)
+
+## Presentation Video
+To access instructions for installing and using the software, you can use [this YouTube link](https://youtu.be/EbC6nIFjulc) to watch the instructional video.
 
 ## Overview
 This project attempts to offer suggested starting hours for proposed event summaries of maintenance tasks via term query strings using EM, LDA and LSA topic modeling. The raw dataset is somewhat contrived, however, loosely based off of actual scheduled maintenance days for a set of managed systems and services. The raw data has been cleaned for this project's use.
